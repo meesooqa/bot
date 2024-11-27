@@ -5,7 +5,7 @@ import (
 	"github.com/meesooqa/bot/internal/service/product"
 )
 
-var registeredCommands = map[string]func(c *Commander, inputMessage *tgbotapi.Message)
+var registeredCommands = map[string]func(c *Commander, inputMessage *tgbotapi.Message){}
 
 type Commander struct {
 	bot            *tgbotapi.BotAPI
