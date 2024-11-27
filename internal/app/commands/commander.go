@@ -5,8 +5,6 @@ import (
 	"github.com/meesooqa/bot/internal/service/product"
 )
 
-var registeredCommands = map[string]func(c *Commander, inputMessage *tgbotapi.Message){}
-
 type Commander struct {
 	bot            *tgbotapi.BotAPI
 	productService *product.Service
@@ -27,10 +25,14 @@ func (c *Commander) HandleUpdate(update tgbotapi.Update) {
 		return
 	}
 
-	command, ok := registeredCommands[update.Message.Command()]
-	if ok {
-		command(c, update.Message)
-	} else {
+	switch update.Message.Command() {
+	case "help":
+		c.Help(update.Message)
+	case "list":
+		c.List(update.Message)
+	case "get":
+		c.Get(update.Message)
+	default:
 		c.Default(update.Message)
 	}
 }
